@@ -31,3 +31,12 @@ jobs:
 
       - name: Push Image
         run: docker push 574644334284.dkr.ecr.ap-south-1.amazonaws.com/devops-demo:v1
+
+      - name: Update kubeconfig
+              run: | aws eks update-kubeconfig --region ap-south-1 --name devops-eks-cluster
+
+      - name: Deploy to EKS
+        run: | kubectl apply -f deployment.yaml
+
+      - name: Restart Deployment
+        run: | kubectl rollout restart deployment devops-demo
